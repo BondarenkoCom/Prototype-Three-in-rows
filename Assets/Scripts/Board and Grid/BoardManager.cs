@@ -27,6 +27,9 @@ public class BoardManager : MonoBehaviour
         float startX = transform.position.x;
         float startY = transform.position.y;
 
+        Sprite[] previousLeft = new Sprite[ySize];
+        Sprite previousBelow = null;
+
         for (int i = 0; i < xSize; i++)
         {
             for (int j = 0; j < ySize; j++)
@@ -38,8 +41,18 @@ public class BoardManager : MonoBehaviour
 
                 _tiles[i, j] = newTile;
                 newTile.transform.parent = transform;
-                Sprite newTileSprite = characters[Random.Range(0, characters.Count)];
+
+                List<Sprite> possibleCharacters = new List<Sprite>();
+                possibleCharacters.AddRange(characters);
+
+                possibleCharacters.Remove(previousLeft[j]);
+                possibleCharacters.Remove(previousBelow);
+
+                Sprite newTileSprite = possibleCharacters[Random.Range(0, possibleCharacters.Count)];
                 newTile.GetComponent<SpriteRenderer>().sprite = newTileSprite;
+
+                previousLeft[j] = newTileSprite;
+                previousBelow = newTileSprite;
             }
         }
     }
