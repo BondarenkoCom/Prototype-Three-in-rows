@@ -37,6 +37,9 @@ public class BoardManager : MonoBehaviour
                     tile.transform.rotation);
 
                 _tiles[i, j] = newTile;
+                newTile.transform.parent = transform;
+                Sprite newTileSprite = characters[Random.Range(0, characters.Count)];
+                newTile.GetComponent<SpriteRenderer>().sprite = newTileSprite;
             }
         }
     }
